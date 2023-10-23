@@ -1,8 +1,9 @@
+import BasicPage from '@/components/basic-page'
+
 function DemoPage() {
   return (
     <>
-      <div className="hero bg-red-400 p-10">Cats</div>
-      <button className="btn btn-primary">Cats</button>
+      <BasicPage />
     </>
   )
 }
