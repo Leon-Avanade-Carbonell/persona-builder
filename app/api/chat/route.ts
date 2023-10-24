@@ -44,5 +44,5 @@ export async function POST(request: Request) {
     model: 'gpt-3.5-turbo-16k-0613'
   })
 
-  return NextResponse.json(response.choices[0].message)
+  return NextResponse.json({ message: response.choices[0].message.content })
 }
