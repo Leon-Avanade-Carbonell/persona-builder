@@ -26,7 +26,7 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
         },
         {
           role: 'user',
-          content: 'Limit your response to a max fo 30 words'
+          content: 'Limit your response to a max for 30 words'
         }
       ]
     default:
