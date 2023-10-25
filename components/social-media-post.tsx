@@ -2,9 +2,10 @@ import { SocialMediaType } from '@/types'
 
 interface ISocialMediaPostProps {
   thoughts: string
-  socialMedia: SocialMediaType
+  source: SocialMediaType
 }
 
-export default function SocialMediaPost() {
-  return <div className="max-w-lg max-h-lg p-5 bg-red-300">Blue</div>
+export default function SocialMediaPost(props: ISocialMediaPostProps) {
+  const { thoughts, source } = props
+  return <div className="max-w-lg max-h-lg w-full p-5 bg-red-300">{source}</div>
 }

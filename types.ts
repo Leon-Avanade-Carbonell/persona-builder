@@ -1,5 +1,7 @@
 import OpenAI from 'openai'
 
+export const socialMediaArray = ['linkedIn', 'facebook', 'twitter']
+
 export type SocialMediaType = 'linkedIn' | 'facebook' | 'twitter'
 export type CompletionMessageType =
   OpenAI.Chat.Completions.ChatCompletionMessageParam[]
