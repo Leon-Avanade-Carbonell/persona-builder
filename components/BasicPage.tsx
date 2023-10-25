@@ -1,8 +1,7 @@
 'use client'
 import { useState } from 'react'
 import SocialMediaPost from './social-media-post'
-import { BasicRequestType, SocialMediaType, socialMediaArray } from '@/types'
-import { useMutation } from '@tanstack/react-query'
+import { SocialMediaType } from '@/types'
 
 const mapped: SocialMediaType[] = ['twitter', 'facebook', 'linkedIn']
 
@@ -54,7 +53,7 @@ export default function BasicPage() {
             </button>
           </div>
           {thoughts && (
-            <div className="flex flex-1 gap-4 items-center text-purple-100 mt-4">
+            <div className="flex flex-1 gap-4 justify-center text-purple-100 mt-4">
               {socialsArray}
             </div>
           )}

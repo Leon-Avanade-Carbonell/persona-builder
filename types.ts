@@ -15,3 +15,10 @@ export type PersonaTableType = Record<
   SocialMediaType,
   OpenAI.Chat.Completions.ChatCompletionMessageParam[]
 >
+
+export type CharacterBuilderProps = {
+  name: string
+  gender: string
+  attribute: string
+  profession: string
+}
