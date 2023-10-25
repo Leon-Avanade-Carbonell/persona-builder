@@ -1,20 +1,25 @@
 'use client'
 
+import { useState } from 'react'
+
 const genderOptions = ['male', 'female', 'non-binary']
 const attributeOptions = [
-  'Friendly',
-  'Outgoing',
-  'Confident',
-  'Intelligent',
-  'Kind',
-  'Creative',
-  'Honest',
-  'Reliable',
-  'Introverted',
-  'Optimistic'
+  'friendly',
+  'outgoing',
+  'confident',
+  'intelligent',
+  'kind',
+  'creative',
+  'honest',
+  'reliable',
+  'introverted',
+  'optimistic'
 ]
 
 function CharacterBuilderForm() {
+  const [name, setName] = useState<undefined | string>()
+  const [gender, setGender] = useState<string>('Gender Options')
+  const [attribute, setAttribute] = useState<string>('Attribute')
   return (
     <>
       <div className="card w-96 bg-purple-300/80 text-purple-700">
@@ -30,10 +35,15 @@ function CharacterBuilderForm() {
           </div>
           <div className="form-control w-full max-w-xs mb-1">
             <label className="label">Gender</label>
-            <select className="select w-full max-w-xs">
-              <option disabled selected>
-                Gender Options
-              </option>
+            <select
+              className="select w-full max-w-xs"
+              defaultValue={'Gender Options'}
+              //   value={gender}
+              onChange={(entry) => {
+                setGender(entry.currentTarget.value)
+              }}
+            >
+              <option disabled>Gender Options</option>
               {genderOptions.map((entry) => (
                 <option key={entry}>{entry}</option>
               ))}
@@ -41,10 +51,13 @@ function CharacterBuilderForm() {
           </div>
           <div className="form-control w-full max-w-xs mb-1">
             <label className="label">Attribute</label>
-            <select className="select w-full max-w-xs">
-              <option disabled selected>
-                Attribute
-              </option>
+            <select
+              className="select w-full max-w-xs"
+              defaultValue={'Attribute'}
+              //   value={attribute}
+              onChange={(entry) => setAttribute(entry.currentTarget.value)}
+            >
+              <option disabled>Attribute</option>
               {attributeOptions.map((entry) => (
                 <option key={entry}>{entry}</option>
               ))}
