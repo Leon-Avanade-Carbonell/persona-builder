@@ -29,8 +29,25 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
           content: 'Limit your response to a max for 30 words'
         }
       ]
+    case 'twitter': {
+      return [
+        {
+          role: 'system',
+          content: 'Act as a Sales Manager for a beauty company.'
+        },
+        {
+          role: 'user',
+          content: 'Limit your response to a max for 20 words'
+        }
+      ]
+    }
     default:
-      return []
+      return [
+        {
+          role: 'user',
+          content: 'Limit your response to a max of 10 words'
+        }
+      ]
   }
 }
 

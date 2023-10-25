@@ -2,33 +2,31 @@
 import { useState } from 'react'
 import SocialMediaPost from './social-media-post'
 import { BasicRequestType, SocialMediaType, socialMediaArray } from '@/types'
-import OpenAI from 'openai'
+import { useMutation } from '@tanstack/react-query'
+
+const mapped: SocialMediaType[] = ['twitter', 'facebook', 'linkedIn']
 
 export default function BasicPage() {
   const [message, setMessage] = useState('')
+  const [loaded, setLoaded] = useState<SocialMediaType[]>(mapped)
   const [thoughts, setThoughts] = useState<undefined | string>()
-  const [sample, setSample] = useState<undefined | string>()
 
-  const socialsArray = socialMediaArray.map((entry) => (
+  function finishedLoading(source: SocialMediaType) {
+    setLoaded((entries) => [...entries, source])
+  }
+
+  const socialsArray = mapped.map((entry) => (
     <SocialMediaPost
       key={entry}
       thoughts={thoughts as string}
       source={entry as SocialMediaType}
+      finishedLoading={finishedLoading}
     />
   ))
 
   async function handleSubmit() {
-    // const requestBody = JSON.stringify({
-    //   message: message,
-    //   socialMedia: 'facebook'
-    // } as BasicRequestType)
-    // const res = await fetch('/api/chat', { method: 'POST', body: requestBody })
-    // console.log(res)
-    // const reply = (await res.json()) as { message: string }
-    // console.log(reply)
-    // setSample(reply.message)
+    setLoaded([])
     setThoughts(message)
-    //   setChatResponse(reply.content);
   }
   return (
     <div className="min-w-screen min-h-screen">
@@ -48,17 +46,16 @@ export default function BasicPage() {
               }}
             />
             <button
-              className="btn btn-primary ml-5"
-              disabled={message.length <= 0}
+              className="btn bg-purple-600 text-purple-100 ml-5"
+              disabled={message.length <= 0 || loaded.length !== mapped.length}
               onClick={() => handleSubmit()}
             >
               Generate
             </button>
           </div>
-          {sample && (
-            <div className="flex flex-1 gap-4 justify-center items-center">
-              {/* {socialsArray} */}
-              {sample}
+          {thoughts && (
+            <div className="flex flex-1 gap-4 items-center text-purple-100 mt-4">
+              {socialsArray}
             </div>
           )}
         </div>
