@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { IProfileSummary, ProfileFormType } from '@/types'
+import { useMutation } from '@tanstack/react-query'
+import { Dispatch, useState } from 'react'
 
 const genderOptions = ['male', 'female', 'non-binary']
 const attributeOptions = [
@@ -16,10 +18,43 @@ const attributeOptions = [
   'optimistic'
 ]
 
-function CharacterBuilderForm() {
+interface ICharacterBuilderForm {
+  setSummary: Dispatch<IProfileSummary>
+}
+
+function CharacterBuilderForm({ setSummary }: ICharacterBuilderForm) {
   const [name, setName] = useState<undefined | string>()
-  const [gender, setGender] = useState<string>('Gender Options')
-  const [attribute, setAttribute] = useState<string>('Attribute')
+  const [gender, setGender] = useState<undefined | string>()
+  const [attribute, setAttribute] = useState<undefined | string>('Attribute')
+  const [profession, setProfession] = useState<undefined | string>()
+
+  async function mutationFn() {
+    const reqBody: ProfileFormType = {
+      name: name || '',
+      attribute: attribute || '',
+      gender: gender || '',
+      profession: profession || ''
+    }
+    return fetch('/api/char-builder/profile', {
+      method: 'POST',
+      body: JSON.stringify(reqBody)
+    })
+  }
+
+  const profileAPI = useMutation({
+    mutationFn: mutationFn,
+    onSuccess: async (res) => {
+      const data = (await res.json()) as { message: string }
+      setSummary({
+        name: name || '',
+        attribute: attribute || '',
+        gender: gender || '',
+        profession: profession || '',
+        summary: data.message
+      })
+    }
+  })
+
   return (
     <>
       <div className="card w-96 bg-purple-300/80 text-purple-700">
@@ -31,6 +66,7 @@ function CharacterBuilderForm() {
               type="text"
               placeholder="Name"
               className="input input-bordered w-full max-w-xs"
+              onChange={(entry) => setName(entry.currentTarget.value)}
             />
           </div>
           <div className="form-control w-full max-w-xs mb-1">
@@ -38,7 +74,6 @@ function CharacterBuilderForm() {
             <select
               className="select w-full max-w-xs"
               defaultValue={'Gender Options'}
-              //   value={gender}
               onChange={(entry) => {
                 setGender(entry.currentTarget.value)
               }}
@@ -69,11 +104,24 @@ function CharacterBuilderForm() {
               type="text"
               placeholder="Profession"
               className="input input-bordered w-full max-w-xs"
+              onChange={(entry) => setProfession(entry.currentTarget.value)}
             />
           </div>
 
           <div className="card-actions justify-end mt-8">
-            <button className="btn bg-orange-700 text-orange-100 w-48 border-none ">
+            <button
+              className="btn bg-orange-700/70 text-orange-100 w-48 border-none hover:bg-orange-700"
+              disabled={
+                !gender ||
+                !name ||
+                name.length <= 1 ||
+                !attribute ||
+                !profession ||
+                profession.length <= 1 ||
+                profileAPI.isPending
+              }
+              onClick={() => profileAPI.mutate()}
+            >
               Generate
             </button>
           </div>

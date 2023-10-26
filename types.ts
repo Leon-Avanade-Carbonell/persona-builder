@@ -22,3 +22,14 @@ export type CharacterBuilderProps = {
   attribute: string
   profession: string
 }
+
+export type ProfileFormType = {
+  name: string
+  gender: string
+  attribute: string
+  profession: string
+}
+
+export interface IProfileSummary extends ProfileFormType {
+  summary: string
+}
