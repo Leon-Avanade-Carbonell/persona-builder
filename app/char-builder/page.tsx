@@ -1,4 +1,4 @@
-import CharacterBuilder from '@/components/CharBuilder'
+import CharacterBuilder from '@/components/pages/CharBuilderPage'
 
 function CharacterBuilderPage() {
   return (

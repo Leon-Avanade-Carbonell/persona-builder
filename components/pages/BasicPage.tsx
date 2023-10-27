@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import SocialMediaPost from './social-media-post'
+import SocialMediaPost from '../cards/social-media-post'
 import { SocialMediaType } from '@/types'
 
 const mapped: SocialMediaType[] = ['twitter', 'facebook', 'linkedIn']

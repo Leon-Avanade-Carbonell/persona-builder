@@ -1,4 +1,4 @@
-import BasicPage from '@/components/BasicPage'
+import BasicPage from '@/components/pages/BasicPage'
 
 function DemoPage() {
   // return <BasicPage />

@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     {
       role: 'user',
       content:
-        'Give a summary of yourself. Limit your response to max of 40 words'
+        'Give a summary of yourself. Limit your response to max of 60 words'
     }
   ]
 
