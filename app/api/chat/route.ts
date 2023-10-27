@@ -33,7 +33,7 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
       return [
         {
           role: 'system',
-          content: 'Act as a Sales Manager for a beauty company.'
+          content: 'Act as a Marketing Manager for a Digital Agency'
         },
         {
           role: 'user',
@@ -45,7 +45,7 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
       return [
         {
           role: 'user',
-          content: 'Limit your response to a max of 10 words'
+          content: 'Limit your response to a max of 20 words'
         }
       ]
   }

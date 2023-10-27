@@ -33,7 +33,7 @@ export default function BasicPage() {
         <div className="flex flex-col items-stretch min-h-screen">
           <div className="flex flex-1 justify-center items-center">
             <input
-              className="input input-bordered input-md w-full max-w-5xl"
+              className="input input-bordered input-xl w-full max-w-5xl text-xl"
               type="text"
               placeholder="Write your post here"
               value={message}
@@ -45,7 +45,7 @@ export default function BasicPage() {
               }}
             />
             <button
-              className="btn bg-purple-600 text-purple-100 ml-5"
+              className="btn bg-purple-600 text-orange-200 text-xl ml-5"
               disabled={message.length <= 0 || loaded.length !== mapped.length}
               onClick={() => handleSubmit()}
             >

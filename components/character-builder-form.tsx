@@ -110,7 +110,7 @@ function CharacterBuilderForm({ setSummary }: ICharacterBuilderForm) {
 
           <div className="card-actions justify-end mt-8">
             <button
-              className="btn bg-orange-700/70 text-orange-100 w-48 border-none hover:bg-orange-700"
+              className="btn bg-purple-600 text-orange-200 w-48 border-none hover:bg-orange-700"
               disabled={
                 !gender ||
                 !name ||
