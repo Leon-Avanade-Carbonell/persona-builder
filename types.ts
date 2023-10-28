@@ -25,7 +25,7 @@ export type CharacterBuilderProps = {
 
 export type ProfileFormType = {
   name: string
-  gender: string
+  gender?: string
   attribute: string
   profession: string
 }

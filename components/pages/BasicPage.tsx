@@ -33,7 +33,7 @@ export default function BasicPage() {
         <div className="flex flex-col items-stretch min-h-screen">
           <div className="flex flex-1 justify-center items-center">
             <input
-              className="input input-bordered input-xl w-full max-w-5xl text-xl"
+              className="input input-bordered input-xl w-full max-w-5xl text-xl text-purple-700"
               type="text"
               placeholder="Write your post here"
               value={message}
