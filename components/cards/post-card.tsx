@@ -4,10 +4,10 @@ import {
   PostBodyParams,
   PostLengthType,
   SocialMediaType,
-  WritingToneLever,
+  WritingToneType,
   emojiLever,
   postLength,
-  writingToneLever
+  writingTone
 } from '@/types'
 import { useMutation } from '@tanstack/react-query'
 import {
@@ -23,7 +23,6 @@ import {
 export interface IPostCardProps {
   source: SocialMediaType
   thoughts: string
-  defaults?: PostBodyParams
   finishedLoading: Dispatch<SocialMediaType>
 }
 
@@ -34,19 +33,33 @@ const reducer = (
   return { ...state, ...nextState }
 }
 
+const mappedSocials: Record<SocialMediaType, PostBodyParams> = {
+  facebook: {
+    emojiTone: 'lots',
+    writingTone: 'Empathetic',
+    postLength: '40 words'
+  },
+  linkedIn: {
+    emojiTone: 'none',
+    writingTone: 'Optimism',
+    postLength: '30 words'
+  },
+  twitter: {
+    emojiTone: 'some',
+    writingTone: 'Humorous',
+    postLength: 'a limerick'
+  }
+}
+
 const baseDefaults: PostBodyParams = {
   emojiTone: 'some',
   postLength: '30 words',
-  writingTone: 'Amused'
+  writingTone: 'Concerned'
 }
 
-function PostCard({
-  source,
-  thoughts,
-  finishedLoading,
-  defaults = baseDefaults
-}: IPostCardProps) {
-  const [state, dispatch] = useReducer(reducer, { ...defaults })
+function PostCard({ source, thoughts, finishedLoading }: IPostCardProps) {
+  const INIT_DATA = mappedSocials[source] || baseDefaults
+  const [state, dispatch] = useReducer(reducer, INIT_DATA)
   const [message, setMessage] = useState('')
   const onceRef = useRef(false)
 
@@ -96,14 +109,14 @@ function PostCard({
           </Levers>
           <Levers
             label="Writing Tone"
-            defaultValue={state.emojiTone}
+            defaultValue={state.writingTone.toLowerCase()}
             onChange={(value) =>
               dispatch({
-                writingTone: value.currentTarget.value as WritingToneLever
+                writingTone: value.currentTarget.value as WritingToneType
               })
             }
           >
-            {writingToneLever.map((entry) => (
+            {writingTone.map((entry) => (
               <option key={entry}>{entry.toLocaleLowerCase()}</option>
             ))}
           </Levers>
