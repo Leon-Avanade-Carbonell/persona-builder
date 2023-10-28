@@ -12,14 +12,15 @@ export async function POST(request: Request) {
   const { emojiTone, writingTone, postLength, message } =
     (await request.json()) as IPostManagerBody
 
-  const emoji = emojiTone === 'none' ? '' : `Use ${emojiTone} emojis. `
-  const tone = `Add a ${writingTone} to the post. `
+  const emoji = emojiTone === 'none' ? '' : `${emojiTone} emojis. `
+  const tone = `Write with a ${writingTone} tone. `
   const limit = `Limit the post to ${postLength}`
 
   console.log(`Edit the post, ${emoji}${tone}${limit}`)
 
   const composer: CompletionMessageType = [
-    { role: 'system', content: `Edit the post, ${emoji}${tone}${limit}` },
+    { role: 'system', content: 'You are a social media poster.' },
+    { role: 'user', content: `Rewrite the post with, ${emoji}${tone}${limit}` },
     { role: 'user', content: message }
   ]
 

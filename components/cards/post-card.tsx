@@ -129,9 +129,9 @@ function PostCard({
         </div>
         <div className="w-lg max-h-[13.5rem] w-full p-5 bg-purple-600 rounded-md">
           <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
-          <div className="h-36 text-md overflow-y-auto">
+          <div className="h-96 text-md overflow-y-auto">
             {chatAPI.isPending ? (
-              <div className="w-full h-full flex flex-1 justify-center items-center">
+              <div className="w-full flex flex-1 justify-center items-center py-6">
                 <span className="loading loading-spinner loading-md " />
               </div>
             ) : (

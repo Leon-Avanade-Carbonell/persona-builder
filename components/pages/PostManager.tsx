@@ -2,10 +2,26 @@
 
 import { useState } from 'react'
 import PostCard from '../cards/post-card'
+import { SocialMediaType } from '@/types'
+
+const mapped: SocialMediaType[] = ['facebook', 'twitter', 'linkedIn']
 
 function PostManager() {
   const [message, setMessage] = useState('')
   const [thoughts, setThoughts] = useState('')
+  const [loaded, setLoaded] = useState<SocialMediaType[]>([])
+
+  function finishedLoading(source: SocialMediaType) {
+    setLoaded((entries) => [...entries, source])
+  }
+  const socialsArray = mapped.map((entry) => (
+    <PostCard
+      key={entry}
+      thoughts={thoughts}
+      source={entry}
+      finishedLoading={finishedLoading}
+    />
+  ))
 
   function handleSubmit() {
     setThoughts(message)
@@ -30,16 +46,16 @@ function PostManager() {
                 }}
               />
               <button
-                className="btn bg-purple-600 text-orange-200 text-xl ml-5"
+                className="btn bg-purple-600 text-orange-200 text-md ml-5"
                 disabled={message.length <= 0}
                 onClick={() => handleSubmit()}
               >
                 Generate
               </button>
             </div>
-            <div className="flex-1  justify-center items-center bg-slate-200 ">
+            <div className="flex-1  justify-center items-center">
               <div className="flex flex-1 gap-4 justify-center text-purple-100 mt-4">
-                <PostCard thoughts={thoughts} source="facebook" />
+                {socialsArray}
               </div>
             </div>
           </div>
