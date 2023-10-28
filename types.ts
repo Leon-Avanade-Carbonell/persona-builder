@@ -33,3 +33,45 @@ export type ProfileFormType = {
 export interface IProfileSummary extends ProfileFormType {
   summary: string
 }
+
+export const emojiLever = ['none', 'sparing', 'lots'] as const
+export type EmojiLeverType = (typeof emojiLever)[number]
+
+export const writingToneLever = [
+  'Formal',
+  'Humorous',
+  'Assertive',
+  'Encouraging',
+  'Optimism',
+  'Concerned',
+  'Friendly',
+  'Persuasive',
+  'Curious',
+  'Humorous',
+  'Joyful',
+  'Pessimism',
+  'Serious',
+  'Accusatory',
+  'Amused',
+  'Cooperative',
+  'Empathetic',
+  'Informal',
+  'Regretful'
+] as const
+export type WritingToneLever = (typeof writingToneLever)[number]
+
+export const postLength = [
+  '10 words',
+  '20 words',
+  '30 words',
+  '1 paragraph',
+  '2 paragraphs',
+  '3 paragraphs'
+] as const
+export type PostLengthType = (typeof postLength)[number]
+
+export type PostBodyParams = {
+  emojiTone: EmojiLeverType
+  writingTone: WritingToneLever
+  postLength: PostLengthType
+}

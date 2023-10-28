@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import PostCard from '../cards/post-card'
 
 function PostManager() {
   const [message, setMessage] = useState('')
@@ -34,7 +35,11 @@ function PostManager() {
                 Generate
               </button>
             </div>
-            <div className="flex-1  justify-center items-center bg-slate-200 "></div>
+            <div className="flex-1  justify-center items-center bg-slate-200 ">
+              <div className="flex flex-1 gap-4 justify-center text-purple-100 mt-4">
+                <PostCard thoughts="meow" source="facebook" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
