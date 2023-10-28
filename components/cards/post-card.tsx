@@ -92,7 +92,7 @@ function PostCard({ source, thoughts, finishedLoading }: IPostCardProps) {
   return (
     <>
       <div className="flex flex-1 flex-col max-w-sm">
-        <div className="w-lg min-h-lg w-full p-5 bg-purple-600 rounded-md my-5 mx-auto">
+        <div className="w-lg min-h-5xl w-full p-5 bg-purple-600 rounded-md my-5 mx-auto">
           <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
           <Levers
             label="Use Emojis"
@@ -136,15 +136,16 @@ function PostCard({ source, thoughts, finishedLoading }: IPostCardProps) {
           <button
             className="btn btn-md mt-6 w-full bg-orange-600 text-orange-200 border-none text-md"
             onClick={() => chatAPI.mutate()}
+            disabled={chatAPI.isPending || !thoughts}
           >
             Update Post
           </button>
         </div>
-        <div className="w-lg max-h-[13.5rem] w-full p-5 bg-purple-600 rounded-md">
+        <div className="w-lg max-h-full w-full p-5 bg-purple-600 rounded-md">
           <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
-          <div className="h-96 text-md overflow-y-auto">
+          <div className="h-44 text-md overflow-y-auto">
             {chatAPI.isPending ? (
-              <div className="w-full flex flex-1 justify-center items-center py-6">
+              <div className="w-full flex flex-1 justify-center items-center py-6 h-24 overflow-y-auto">
                 <span className="loading loading-spinner loading-md " />
               </div>
             ) : (
