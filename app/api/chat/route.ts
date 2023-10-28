@@ -25,7 +25,7 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
           content: 'Please provide a correction to my next messages'
         },
         {
-          role: 'user',
+          role: 'system',
           content: 'Limit your response to a max for 30 words'
         }
       ]
@@ -36,7 +36,7 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
           content: 'Act as a Marketing Manager for a Digital Agency'
         },
         {
-          role: 'user',
+          role: 'system',
           content: 'Limit your response to a max for 20 words'
         }
       ]
@@ -44,7 +44,7 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
     default:
       return [
         {
-          role: 'user',
+          role: 'system',
           content: 'Limit your response to a max of 20 words'
         }
       ]

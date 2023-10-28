@@ -5,15 +5,15 @@ import CharacterBuilderForm from '../character-builder-form'
 import { IProfileSummary } from '@/types'
 
 function CharacterBuilderPage() {
-  const [summary, setSummary] = useState<IProfileSummary | undefined>({
-    name: 'Mighty Mouse',
-    attribute: 'creative',
-    gender: 'male',
-    profession: 'Superhero',
-    summary:
-      'I am Mighty Mouse, a superhero with a creative soul. With a passion for painting, I bring color and artistry to my crime-fighting adventures. Equipped with artistic knowledge and a mighty spirit, I use my abilities to protect the world and inspire others through my vibrant superhero escapades.'
-  })
-  // const [summary, setSummary] = useState<IProfileSummary | undefined>()
+  // const [summary, setSummary] = useState<IProfileSummary | undefined>({
+  //   name: 'Mighty Mouse',
+  //   attribute: 'creative',
+  //   gender: 'male',
+  //   profession: 'Superhero',
+  //   summary:
+  //     'I am Mighty Mouse, a superhero with a creative soul. With a passion for painting, I bring color and artistry to my crime-fighting adventures. Equipped with artistic knowledge and a mighty spirit, I use my abilities to protect the world and inspire others through my vibrant superhero escapades.'
+  // })
+  const [summary, setSummary] = useState<IProfileSummary | undefined>()
   const [message, setMessage] = useState('')
   // const [loaded, setLoaded] = useState<SocialMediaType[]>(mapped)
   const [thoughts, setThoughts] = useState<undefined | string>()
