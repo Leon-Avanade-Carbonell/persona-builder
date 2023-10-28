@@ -1,5 +1,6 @@
 import {
   EmojiLeverType,
+  IPostManagerBody,
   PostBodyParams,
   PostLengthType,
   SocialMediaType,
@@ -8,12 +9,22 @@ import {
   postLength,
   writingToneLever
 } from '@/types'
-import { InputHTMLAttributes, SelectHTMLAttributes, useReducer } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import {
+  Dispatch,
+  InputHTMLAttributes,
+  SelectHTMLAttributes,
+  useEffect,
+  useReducer,
+  useRef,
+  useState
+} from 'react'
 
 export interface IPostCardProps {
   source: SocialMediaType
   thoughts: string
   defaults?: PostBodyParams
+  finishedLoading: Dispatch<SocialMediaType>
 }
 
 const reducer = (
@@ -25,16 +36,46 @@ const reducer = (
 
 const baseDefaults: PostBodyParams = {
   emojiTone: 'some',
-  postLength: '2 paragraphs',
+  postLength: '30 words',
   writingTone: 'Amused'
 }
 
 function PostCard({
   source,
   thoughts,
+  finishedLoading,
   defaults = baseDefaults
 }: IPostCardProps) {
   const [state, dispatch] = useReducer(reducer, { ...defaults })
+  const [message, setMessage] = useState('')
+  const onceRef = useRef(false)
+
+  const chatAPI = useMutation({
+    mutationFn: () => {
+      const requestBody = JSON.stringify({
+        ...state,
+        message: thoughts
+      } as IPostManagerBody)
+      return fetch('/api/post-manager', { method: 'POST', body: requestBody })
+    },
+    onSuccess: async (res) => {
+      const data = (await res.json()) as { message: string }
+      setMessage(data.message)
+    },
+    onSettled: () => {
+      onceRef.current = false
+      finishedLoading(source)
+    }
+  })
+
+  useEffect(() => {
+    if (thoughts && !onceRef.current) {
+      chatAPI.mutate()
+      onceRef.current = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [thoughts])
+
   return (
     <>
       <div className="flex flex-1 flex-col max-w-sm">
@@ -79,10 +120,24 @@ function PostCard({
               <option key={entry}>{entry.toLocaleLowerCase()}</option>
             ))}
           </Levers>
+          <button
+            className="btn btn-md mt-6 w-full bg-orange-600 text-orange-200 border-none text-md"
+            onClick={() => chatAPI.mutate()}
+          >
+            Update Post
+          </button>
         </div>
         <div className="w-lg max-h-[13.5rem] w-full p-5 bg-purple-600 rounded-md">
           <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
-          <div className="h-24 text-xl">{thoughts || 'loading...'}</div>
+          <div className="h-36 text-md overflow-y-auto">
+            {chatAPI.isPending ? (
+              <div className="w-full h-full flex flex-1 justify-center items-center">
+                <span className="loading loading-spinner loading-md " />
+              </div>
+            ) : (
+              message
+            )}
+          </div>
         </div>
       </div>
     </>

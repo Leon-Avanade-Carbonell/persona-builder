@@ -61,12 +61,11 @@ export const writingToneLever = [
 export type WritingToneLever = (typeof writingToneLever)[number]
 
 export const postLength = [
-  '10 words',
   '20 words',
   '30 words',
-  '1 paragraph',
-  '2 paragraphs',
-  '3 paragraphs'
+  '40 words',
+  '50 words',
+  'a limerick'
 ] as const
 export type PostLengthType = (typeof postLength)[number]
 
