@@ -24,7 +24,7 @@ const reducer = (
 }
 
 const baseDefaults: PostBodyParams = {
-  emojiTone: 'sparing',
+  emojiTone: 'some',
   postLength: '2 paragraphs',
   writingTone: 'Amused'
 }

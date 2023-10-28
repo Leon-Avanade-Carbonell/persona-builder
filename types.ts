@@ -34,7 +34,7 @@ export interface IProfileSummary extends ProfileFormType {
   summary: string
 }
 
-export const emojiLever = ['none', 'sparing', 'lots'] as const
+export const emojiLever = ['none', 'some', 'lots'] as const
 export type EmojiLeverType = (typeof emojiLever)[number]
 
 export const writingToneLever = [
@@ -74,4 +74,8 @@ export type PostBodyParams = {
   emojiTone: EmojiLeverType
   writingTone: WritingToneLever
   postLength: PostLengthType
+}
+
+export interface IPostManagerBody extends PostBodyParams {
+  message: string
 }

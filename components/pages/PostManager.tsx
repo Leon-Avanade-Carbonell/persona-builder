@@ -5,9 +5,11 @@ import PostCard from '../cards/post-card'
 
 function PostManager() {
   const [message, setMessage] = useState('')
-  const [thoughts, setThoughts] = useState<undefined | string>()
+  const [thoughts, setThoughts] = useState('')
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    setThoughts(message)
+  }
 
   return (
     <>
@@ -37,7 +39,7 @@ function PostManager() {
             </div>
             <div className="flex-1  justify-center items-center bg-slate-200 ">
               <div className="flex flex-1 gap-4 justify-center text-purple-100 mt-4">
-                <PostCard thoughts="meow" source="facebook" />
+                <PostCard thoughts={thoughts} source="facebook" />
               </div>
             </div>
           </div>
