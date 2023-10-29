@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     (await request.json()) as IPostManagerBody
 
   const emoji =
-    emojiTone === 'none' ? 'Do not use emojis' : `Use ${emojiTone} emojis. `
+    emojiTone === 'none' ? 'Do not use emojis. ' : `Use ${emojiTone} emojis. `
   const tone = `Write with a ${writingTone} tone. `
   const limit = `Limit the post to ${postLength}`
 

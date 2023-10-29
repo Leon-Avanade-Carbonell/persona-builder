@@ -33,7 +33,8 @@ function handlePersona(persona: SocialMediaType): CompletionMessageType {
       return [
         {
           role: 'system',
-          content: 'Act as a Marketing Manager for a Digital Agency'
+          content:
+            'Act as a Social Media marketer and want to help manage our posts.'
         },
         {
           role: 'system',

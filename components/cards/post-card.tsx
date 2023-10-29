@@ -36,18 +36,18 @@ const reducer = (
 const mappedSocials: Record<SocialMediaType, PostBodyParams> = {
   facebook: {
     emojiTone: 'lots',
-    writingTone: 'Empathetic',
+    writingTone: 'Friendly',
     postLength: '40 words'
   },
   linkedIn: {
-    emojiTone: 'none',
-    writingTone: 'Optimism',
+    emojiTone: 'some',
+    writingTone: 'Formal',
     postLength: '30 words'
   },
   twitter: {
-    emojiTone: 'some',
+    emojiTone: 'none',
     writingTone: 'Humorous',
-    postLength: 'a limerick'
+    postLength: 'a haiku'
   }
 }
 
@@ -168,7 +168,7 @@ function Levers({ label, ...props }: ILeverProps) {
       <label className="label">{label}</label>
       <select
         placeholder={label}
-        className="select w-full max-w-sm text-purple-700 select-sm"
+        className="select w-full max-w-sm text-purple-700 select-sm text-xl"
         {...props}
         // onChange={(entry) => setName(entry.currentTarget.value)}
       />

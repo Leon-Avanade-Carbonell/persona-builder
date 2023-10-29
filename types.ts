@@ -65,7 +65,8 @@ export const postLength = [
   '30 words',
   '40 words',
   '50 words',
-  'a limerick'
+  'a limerick',
+  'a haiku'
 ] as const
 export type PostLengthType = (typeof postLength)[number]
 
