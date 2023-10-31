@@ -39,24 +39,18 @@ export type EmojiLeverType = (typeof emojiLever)[number]
 
 export const writingTone = [
   'Formal',
+  'Informal',
   'Humorous',
-  'Assertive',
-  'Encouraging',
-  'Optimism',
   'Concerned',
   'Friendly',
   'Persuasive',
   'Curious',
-  'Humorous',
-  'Joyful',
-  'Pessimism',
-  'Serious',
-  'Accusatory',
-  'Amused',
-  'Cooperative',
   'Empathetic',
-  'Informal',
-  'Regretful'
+  'Regretful',
+  'Pirate',
+  'Shakespearean',
+  'Cockney',
+  'Jamaican'
 ] as const
 export type WritingToneType = (typeof writingTone)[number]
 

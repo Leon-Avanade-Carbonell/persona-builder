@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import SocialMediaPost from '../cards/social-media-post'
 import { SocialMediaType } from '@/types'
+import Link from 'next/link'
 
 const mapped: SocialMediaType[] = ['twitter', 'facebook', 'linkedIn']
 
@@ -53,9 +54,16 @@ export default function BasicPage() {
             </button>
           </div>
           {thoughts && (
-            <div className="flex flex-1 gap-4 justify-center text-purple-100 mt-4">
-              {socialsArray}
-            </div>
+            <>
+              <div className="flex flex-1 gap-4 justify-center text-purple-100 mt-4">
+                {socialsArray}
+              </div>
+              <div className="flex h-20 self-end">
+                <Link href="/post-manager" className="text-orange-700 text-xl">
+                  Post Manager
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </div>

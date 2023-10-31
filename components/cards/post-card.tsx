@@ -46,7 +46,7 @@ const mappedSocials: Record<SocialMediaType, PostBodyParams> = {
   },
   twitter: {
     emojiTone: 'none',
-    writingTone: 'Humorous',
+    writingTone: 'Pirate',
     postLength: 'a haiku'
   }
 }
