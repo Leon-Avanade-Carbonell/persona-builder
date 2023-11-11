@@ -1,5 +1,4 @@
 'use client'
-
 import {
   Dispatch,
   ReactNode,
@@ -9,8 +8,10 @@ import {
 } from 'react'
 
 export type CampaignType = {
-  id: number
+  id: string
   name: string
+  details: string
+  keywords: string
 }
 
 export type DashboardStateType = {
@@ -20,12 +21,16 @@ export type DashboardStateType = {
 const INIT_STATE: DashboardStateType = {
   campaigns: [
     {
-      id: 1,
-      name: 'Tennis Australia - Love All'
+      id: '48e2fcd0-5f4a-4101-bfcf-d51416032329',
+      name: 'Tennis Australia - Love All',
+      details: 'All about love',
+      keywords: ''
     },
     {
-      id: 2,
-      name: 'Tennis Australia - Cheap Tuesdays'
+      id: '9a91d3cb-ebb6-48c9-8e5e-ffc38622a3aa',
+      name: 'Tennis Australia - Cheap Tuesdays',
+      details: 'boost ticket sales',
+      keywords: ''
     }
   ]
 }
