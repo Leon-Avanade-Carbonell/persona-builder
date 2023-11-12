@@ -1,3 +1,4 @@
+import { ComposerContextProvider } from '@/components/context/DashboardComposerContext'
 import CampaignDetails from '@/components/pages/dashboard/campaign-details'
 import { MessageArea } from '@/components/pages/dashboard/message-area'
 
@@ -13,8 +14,10 @@ export default function Page({ params }: { params: { campaignId: string } }) {
           <MessageList campaignId={params.campaignId} />
         </div>
         <div className="max-h-[80%]">
-          <MessageArea campaignId={params.campaignId} />
-          <CampaignCards />
+          <ComposerContextProvider>
+            <MessageArea />
+            <CampaignCards campaignId={params.campaignId} />
+          </ComposerContextProvider>
         </div>
       </div>
     </>

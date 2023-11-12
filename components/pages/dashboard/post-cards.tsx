@@ -8,9 +8,10 @@ import {
   campaignWritingTone,
   defaultCampaignCard
 } from './campaign-card-types'
-import { writingTone } from '@/types'
+import { useDashboardContext } from '@/components/context/DashboardContext'
+import { useComposerContext } from '@/components/context/DashboardComposerContext'
 
-export function CampaignCards() {
+export function CampaignCards({ campaignId }: { campaignId: string }) {
   const [cardList, setCardList] = useState<CampaignCardType[]>([])
 
   return (
@@ -29,13 +30,19 @@ export function CampaignCards() {
         </button>
       </div>
       {cardList.map((entry) => (
-        <CardForms key={entry.id} card={entry} />
+        <CardForms key={entry.id} campaignId={campaignId} card={entry} />
       ))}
     </>
   )
 }
 
-function CardForms({ card }: { card: CampaignCardType }) {
+function CardForms({
+  campaignId,
+  card
+}: {
+  campaignId: string
+  card: CampaignCardType
+}) {
   const [state, dispatch] = useReducer(
     (state: CampaignCardType, nextState: Partial<CampaignCardType>) => ({
       ...state,
@@ -43,30 +50,58 @@ function CardForms({ card }: { card: CampaignCardType }) {
     }),
     card
   )
+
+  const { state: dashboardState } = useDashboardContext()
+  const { state: messageState } = useComposerContext()
+  const campaign = dashboardState.campaigns.find(
+    (entry) => entry.id === campaignId
+  )
+
+  if (!campaign) return <>Campaign not found {campaignId}</>
+
   return (
     <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg mb-2">
-      <div className="font-semi-bold text-red-700 mb-2">Title</div>
-      <input
-        type="text"
-        className="py-1 px-2 text-red-700 mb-5 w-full"
-        value={state.title}
-        onChange={(e) => dispatch({ title: e.target.value })}
-        maxLength={30}
-      />
-      <div className="font-semi-bold text-red-700 mb-2">Writing Tone</div>
-      <select
-        className="select-sm py-1 px-2 text-red-700 mb-5 w-full"
-        value={state.writingTone}
-        onChange={(entry) => {
-          dispatch({
-            writingTone: entry.target.value as CampaignWritingToneType
-          })
-        }}
-      >
-        {campaignWritingTone.map((entry) => (
-          <option key={entry}>{entry}</option>
-        ))}
-      </select>
+      <div className="flex flex-row">
+        <div className="flex flex-col  w-[55%]">
+          <div className="font-semi-bold text-red-700 mb-2">Title</div>
+          <input
+            type="text"
+            className="py-1 px-2 text-red-700 mb-5 w-full"
+            value={state.title}
+            onChange={(e) => dispatch({ title: e.target.value })}
+            maxLength={30}
+          />
+          <div className="font-semi-bold text-red-700 mb-2">Writing Tone</div>
+          <select
+            className="select-sm py-1 px-2 text-red-700 mb-5 w-full"
+            value={state.writingTone}
+            onChange={(entry) => {
+              dispatch({
+                writingTone: entry.target.value as CampaignWritingToneType
+              })
+            }}
+          >
+            {campaignWritingTone.map((entry) => (
+              <option key={entry}>{entry}</option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-row pl-5 w-[40%]">
+          <div className="flex flex-col justify-between">
+            <div className="font-semi-bold text-red-700 mb-2">Output</div>
+
+            <div className="flex justify-end">
+              <button
+                className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
+                disabled={!(messageState.message.length >= 1)}
+                // onClick={() => dispatch({ message: current })}
+              >
+                Generate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

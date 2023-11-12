@@ -31,3 +31,11 @@ export const defaultCampaignCard: CampaignCardType = {
   title: '',
   writingTone: 'informative'
 }
+
+export type CampaignPostType = {
+  message: string
+  description: string
+  campaignKeywords?: string
+  writingTone: CampaignWritingToneType
+  ageGroup?: string
+}
