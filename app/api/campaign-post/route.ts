@@ -10,15 +10,21 @@ const openai = new OpenAI({
 })
 
 export async function POST(request: Request) {
-  const { message, writingTone } = (await request.json()) as CampaignPostType
+  const { message, writingTone, description } =
+    (await request.json()) as CampaignPostType
 
-  let contentText = `My message is ${message} and I want to write it in a ${writingTone}`
+  let contentText = ``
+  contentText +=
+    description.length >= 1
+      ? `My social media campaign themes is about ${description}`
+      : ''
+  contentText += ` My message is ${message} and I want to write it in a ${writingTone}`
 
   const composer: CompletionMessageType = [
     {
       role: 'system',
       content:
-        'You are a digital media campaign manager. You will be tasked to generate posts based on the user prompts'
+        'You are a digital media campaign manager. You will be tasked to generate posts based on the user prompts.'
     },
     {
       role: 'user',
@@ -26,8 +32,7 @@ export async function POST(request: Request) {
     },
     {
       role: 'user',
-      content:
-        'Please generate a short social media message with those information'
+      content: 'Please generate social media message with a max of 50 words'
     }
   ]
 
@@ -35,6 +40,8 @@ export async function POST(request: Request) {
     messages: composer,
     model: 'gpt-3.5-turbo-16k-0613'
   })
+
+  console.table(response.choices.map((entry) => entry.message.content))
 
   return NextResponse.json({ message: response.choices[0].message.content })
 }

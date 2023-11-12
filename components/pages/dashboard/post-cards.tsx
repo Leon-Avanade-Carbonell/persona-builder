@@ -4,15 +4,19 @@ import { useReducer, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import {
   CampaignCardType,
+  CampaignPostType,
   CampaignWritingToneType,
   campaignWritingTone,
   defaultCampaignCard
 } from './campaign-card-types'
 import { useDashboardContext } from '@/components/context/DashboardContext'
 import { useComposerContext } from '@/components/context/DashboardComposerContext'
+import { useMutation } from '@tanstack/react-query'
 
 export function CampaignCards({ campaignId }: { campaignId: string }) {
-  const [cardList, setCardList] = useState<CampaignCardType[]>([])
+  const [cardList, setCardList] = useState<CampaignCardType[]>([
+    { id: uuid().toString(), title: 'facebook', writingTone: 'informative' }
+  ])
 
   return (
     <>
@@ -50,12 +54,40 @@ function CardForms({
     }),
     card
   )
+  const [output, setOutput] = useState('')
 
   const { state: dashboardState } = useDashboardContext()
   const { state: messageState } = useComposerContext()
   const campaign = dashboardState.campaigns.find(
     (entry) => entry.id === campaignId
   )
+
+  function mutateFn() {
+    const requestBody = {
+      description: campaign?.details || '',
+      message: messageState.message,
+      writingTone: state.writingTone,
+      campaignKeywords: campaign?.keywords || ''
+    } as CampaignPostType
+
+    return fetch('/api/campaign-post', {
+      method: 'POST',
+      body: JSON.stringify(requestBody)
+    })
+  }
+
+  const postAPI = useMutation({
+    mutationFn: mutateFn,
+    onSuccess: async (res) => {
+      const data = (await res.json()) as { message: string }
+      setOutput(data.message)
+    }
+  })
+
+  function handleGenerate() {
+    setOutput('')
+    postAPI.mutate()
+  }
 
   if (!campaign) return <>Campaign not found {campaignId}</>
 
@@ -89,12 +121,16 @@ function CardForms({
         <div className="flex flex-row pl-5 w-[40%]">
           <div className="flex flex-col justify-between">
             <div className="font-semi-bold text-red-700 mb-2">Output</div>
-
+            <div className="text-red-700 mb-2 max-h-[300px] overflow-y-auto">
+              {output}
+            </div>
             <div className="flex justify-end">
               <button
                 className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
-                disabled={!(messageState.message.length >= 1)}
-                // onClick={() => dispatch({ message: current })}
+                disabled={
+                  !(messageState.message.length >= 1) || postAPI.isPending
+                }
+                onClick={handleGenerate}
               >
                 Generate
               </button>
