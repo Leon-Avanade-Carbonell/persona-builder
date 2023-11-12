@@ -21,7 +21,7 @@ export default function CampaignDetails({
   if (!campaign) return <>Campaign Not Found</>
   return (
     <>
-      <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg">
+      <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg h-[500px]">
         <div className="font-bold text-red-700 mb-5">{campaign.name}</div>
         <div className="font-semi-bold text-red-700 mb-2">Details</div>
         <textarea
@@ -29,8 +29,9 @@ export default function CampaignDetails({
           onChange={(e) => dispatchFormVal({ details: e.target.value })}
           name="description"
           id="description"
-          className="p-2 text-red-700 w-full h-[100px] mb-5"
-          maxLength={100}
+          className="p-2 text-red-700 w-full mb-5"
+          rows={4}
+          maxLength={600}
         />
         <div className="font-semi-bold text-red-700 mb-2">Keywords</div>
         <input

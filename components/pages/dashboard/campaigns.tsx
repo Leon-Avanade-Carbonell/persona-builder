@@ -8,8 +8,9 @@ export function Campaigns() {
   const router = useRouter()
   return (
     <>
-      <div className="p-2 min-w-full bg-orange-200 rounded-lg">
-        <table className="border-collapse border-2 w-[700px]">
+      <div className="p-5 max-w-5xl bg-orange-200 rounded-lg max-h-96">
+        <div className="text-red-700 font-bold mb-5">Campaigns</div>
+        <table className="border-collapse border-2 w-[700px] max-h-80">
           <tbody>
             {state.campaigns.map((entry) => (
               <tr key={entry.id}>

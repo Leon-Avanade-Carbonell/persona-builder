@@ -12,9 +12,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
       </div>
       <div className="flex flex-1 mx-5">
-        <DashboardContextProvider>
-          <div className="">{children}</div>
-        </DashboardContextProvider>
+        <DashboardContextProvider>{children}</DashboardContextProvider>
       </div>
     </div>
   )
