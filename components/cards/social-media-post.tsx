@@ -39,9 +39,9 @@ export default function SocialMediaPost(props: ISocialMediaPostProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thoughts])
   return (
-    <div className="max-w-lg max-h-[13.5rem] w-full p-5 bg-purple-600 rounded-md">
-      <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
-      <div className="h-24 text-xl">{message || 'loading...'}</div>
+    <div className="max-w-lg max-h-[15rem] w-full p-5 bg-orange-200 rounded-md">
+      <div className="mb-4 text-red-700 text-xl font-bold">{source}</div>
+      <div className="h-24 text-xl text-red-700">{message || 'loading...'}</div>
     </div>
   )
 }

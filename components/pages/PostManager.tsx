@@ -34,7 +34,7 @@ function PostManager() {
           <div className="flex flex-col items-stretch min-h-screen">
             <div className="flex justify-center items-center h-44">
               <input
-                className="input input-bordered input-xl w-full max-w-5xl text-xl text-purple-700"
+                className="input input-bordered input-xl w-full max-w-5xl text-xl text-red-700"
                 type="text"
                 placeholder="Write your post here"
                 value={message}
@@ -46,7 +46,7 @@ function PostManager() {
                 }}
               />
               <button
-                className="btn bg-purple-600 text-orange-200 text-md ml-5"
+                className="btn bg-orange-600 text-red-200 text-md ml-5"
                 disabled={message.length <= 0}
                 onClick={() => handleSubmit()}
               >

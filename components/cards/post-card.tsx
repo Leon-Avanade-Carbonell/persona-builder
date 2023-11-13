@@ -92,8 +92,8 @@ function PostCard({ source, thoughts, finishedLoading }: IPostCardProps) {
   return (
     <>
       <div className="flex flex-1 flex-col max-w-sm">
-        <div className="w-lg min-h-5xl w-full p-5 bg-purple-600 rounded-md my-5 mx-auto">
-          <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
+        <div className="w-lg min-h-5xl w-full p-5 bg-orange-200 text-red-700 rounded-md my-5 mx-auto">
+          <div className="mb-4 text-red-700 text-xl font-bold">{source}</div>
           <Levers
             label="Use Emojis"
             defaultValue={state.emojiTone}
@@ -134,16 +134,16 @@ function PostCard({ source, thoughts, finishedLoading }: IPostCardProps) {
             ))}
           </Levers>
           <button
-            className="btn btn-md mt-6 w-full bg-orange-600 text-orange-200 border-none text-md"
+            className="btn btn-md mt-6 w-full bg-orange-700/70 text-red-200 border-none text-md"
             onClick={() => chatAPI.mutate()}
             disabled={chatAPI.isPending || !thoughts}
           >
             Update Post
           </button>
         </div>
-        <div className="w-lg max-h-full w-full p-5 bg-purple-600 rounded-md">
-          <div className="mb-4 text-orange-200 text-xl font-bold">{source}</div>
-          <div className="h-44 text-md overflow-y-auto">
+        <div className="w-lg max-h-full w-full p-5 bg-orange-200 rounded-md">
+          <div className="mb-4 text-red-700 text-xl font-bold">{source}</div>
+          <div className="h-44 text-red-700 text-md overflow-y-auto">
             {chatAPI.isPending ? (
               <div className="w-full flex flex-1 justify-center items-center py-6 h-24 overflow-y-auto">
                 <span className="loading loading-spinner loading-md " />
@@ -168,7 +168,7 @@ function Levers({ label, ...props }: ILeverProps) {
       <label className="label">{label}</label>
       <select
         placeholder={label}
-        className="select w-full max-w-sm text-purple-700 select-sm text-xl"
+        className="select w-full max-w-sm text-red-700 select-sm text-xl"
         {...props}
         // onChange={(entry) => setName(entry.currentTarget.value)}
       />

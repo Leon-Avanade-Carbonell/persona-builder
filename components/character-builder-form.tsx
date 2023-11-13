@@ -57,7 +57,7 @@ function CharacterBuilderForm({ setSummary }: ICharacterBuilderForm) {
 
   return (
     <>
-      <div className="card w-96 bg-purple-300/80 text-purple-700">
+      <div className="card w-96 bg-orange-200 text-red-700">
         <div className="card-body">
           <div className="card-title">Character Builder</div>
           <div className="form-control w-full max-w-xs mb-1">
@@ -110,7 +110,7 @@ function CharacterBuilderForm({ setSummary }: ICharacterBuilderForm) {
 
           <div className="card-actions justify-end mt-8">
             <button
-              className="btn bg-purple-600 text-orange-200 w-48 border-none hover:bg-orange-700"
+              className="btn bg-red-700 text-orange-200 w-48 border-none hover:bg-orange-700"
               disabled={
                 !gender ||
                 !name ||
