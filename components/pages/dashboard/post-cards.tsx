@@ -1,6 +1,6 @@
 'use client'
 
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import {
   CampaignCardType,
@@ -61,6 +61,7 @@ function CardForms({
   const campaign = dashboardState.campaigns.find(
     (entry) => entry.id === campaignId
   )
+  const onceRef = useRef(false)
 
   function mutateFn() {
     const requestBody = {
@@ -81,6 +82,9 @@ function CardForms({
     onSuccess: async (res) => {
       const data = (await res.json()) as { message: string }
       setOutput(data.message)
+    },
+    onSettled: () => {
+      onceRef.current = false
     }
   })
 
@@ -89,53 +93,60 @@ function CardForms({
     postAPI.mutate()
   }
 
+  useEffect(() => {
+    if (!onceRef.current) {
+      onceRef.current = true
+      handleGenerate()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageState.message])
+
   if (!campaign) return <>Campaign not found {campaignId}</>
 
   return (
     <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg mb-2">
-      <div className="flex flex-row">
-        <div className="flex flex-col  w-[55%]">
-          <div className="font-semi-bold text-red-700 mb-2">Title</div>
-          <input
-            type="text"
-            className="py-1 px-2 text-red-700 mb-5 w-full"
-            value={state.title}
-            onChange={(e) => dispatch({ title: e.target.value })}
-            maxLength={30}
-          />
-          <div className="font-semi-bold text-red-700 mb-2">Writing Tone</div>
-          <select
-            className="select-sm py-1 px-2 text-red-700 mb-5 w-full"
-            value={state.writingTone}
-            onChange={(entry) => {
-              dispatch({
-                writingTone: entry.target.value as CampaignWritingToneType
-              })
-            }}
-          >
-            {campaignWritingTone.map((entry) => (
-              <option key={entry}>{entry}</option>
-            ))}
-          </select>
+      <div className="flex flex-row justify-end">
+        <button>settings</button>
+        <button>close</button>
+      </div>
+      <div className="flex flex-col">
+        <div className="font-semi-bold text-red-700 mb-2">Title</div>
+        <input
+          type="text"
+          className="py-1 px-2 text-red-700 mb-5 w-full"
+          value={state.title}
+          onChange={(e) => dispatch({ title: e.target.value })}
+          maxLength={30}
+        />
+        <div className="font-semi-bold text-red-700 mb-2">Writing Tone</div>
+        <select
+          className="select-sm py-1 px-2 text-red-700 mb-5 w-full"
+          value={state.writingTone}
+          onChange={(entry) => {
+            dispatch({
+              writingTone: entry.target.value as CampaignWritingToneType
+            })
+          }}
+        >
+          {campaignWritingTone.map((entry) => (
+            <option key={entry}>{entry}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex flex-col justify-between">
+        <div className="font-semi-bold text-red-700 mb-2">Output</div>
+        <div className="text-red-700 mb-2 max-h-[300px] overflow-y-auto">
+          {output}
         </div>
-        <div className="flex flex-row pl-5 w-[40%]">
-          <div className="flex flex-col justify-between">
-            <div className="font-semi-bold text-red-700 mb-2">Output</div>
-            <div className="text-red-700 mb-2 max-h-[300px] overflow-y-auto">
-              {output}
-            </div>
-            <div className="flex justify-end">
-              <button
-                className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
-                disabled={
-                  !(messageState.message.length >= 1) || postAPI.isPending
-                }
-                onClick={handleGenerate}
-              >
-                Generate
-              </button>
-            </div>
-          </div>
+        <div className="flex justify-end">
+          <button
+            className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
+            disabled={!(messageState.message.length >= 1) || postAPI.isPending}
+            onClick={handleGenerate}
+          >
+            Generate
+          </button>
         </div>
       </div>
     </div>

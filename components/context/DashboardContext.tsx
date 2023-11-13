@@ -26,7 +26,7 @@ const INIT_STATE: DashboardStateType = {
       id: '48e2fcd0-5f4a-4101-bfcf-d51416032329',
       name: 'Tennis Australia - Love All',
       details:
-        "Join Tennis Australia in celebrating diversity and inclusivity with our 'Love All' campaign. We're shining a spotlight on the talent and courage of LGBTQ tennis players, embracing the true spirit of the game. Through engaging content, personal stories, and match highlights, we aim to foster a community that loves and supports tennis for all. Let's champion equality on and off the court – because in tennis, we believe in 'Love All.",
+        "Join Tennis Australia in celebrating diversity and inclusivity with our 'Love All' campaign. We're shining a spotlight on the talent and courage of LGBTQ tennis players, embracing the true spirit of the game. Through engaging content, personal stories, and match highlights, we aim to foster a community that loves and supports tennis for all. Let's champion equality on and off the court – because in tennis, we believe in 'Love All'.",
       keywords: '',
       campaignCards: []
     },
