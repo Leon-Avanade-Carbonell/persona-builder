@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { Dispatch, useEffect, useReducer, useRef, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import {
   CampaignCardType,
@@ -12,11 +12,17 @@ import {
 import { useDashboardContext } from '@/components/context/DashboardContext'
 import { useComposerContext } from '@/components/context/DashboardComposerContext'
 import { useMutation } from '@tanstack/react-query'
+import { CloseIcon } from '@/components/atoms/icons/close'
+import { VAdjustmentsIcon } from '@/components/atoms/icons/adjustments'
 
 export function CampaignCards({ campaignId }: { campaignId: string }) {
   const [cardList, setCardList] = useState<CampaignCardType[]>([
     { id: uuid().toString(), title: 'facebook', writingTone: 'informative' }
   ])
+
+  function deleteCard(cardId: string) {
+    setCardList((entries) => entries.filter((entry) => entry.id !== cardId))
+  }
 
   return (
     <>
@@ -34,7 +40,12 @@ export function CampaignCards({ campaignId }: { campaignId: string }) {
         </button>
       </div>
       {cardList.map((entry) => (
-        <CardForms key={entry.id} campaignId={campaignId} card={entry} />
+        <CardForms
+          key={entry.id}
+          campaignId={campaignId}
+          card={entry}
+          deleteCard={deleteCard}
+        />
       ))}
     </>
   )
@@ -42,10 +53,12 @@ export function CampaignCards({ campaignId }: { campaignId: string }) {
 
 function CardForms({
   campaignId,
-  card
+  card,
+  deleteCard
 }: {
   campaignId: string
   card: CampaignCardType
+  deleteCard: Dispatch<string>
 }) {
   const [state, dispatch] = useReducer(
     (state: CampaignCardType, nextState: Partial<CampaignCardType>) => ({
@@ -55,6 +68,7 @@ function CardForms({
     card
   )
   const [output, setOutput] = useState('')
+  const [settings, setSettings] = useState(true)
 
   const { state: dashboardState } = useDashboardContext()
   const { state: messageState } = useComposerContext()
@@ -93,8 +107,12 @@ function CardForms({
     postAPI.mutate()
   }
 
+  function handleClose() {
+    deleteCard(card.id!)
+  }
+
   useEffect(() => {
-    if (!onceRef.current) {
+    if (!onceRef.current && messageState.message.length >= 1) {
       onceRef.current = true
       handleGenerate()
     }
@@ -106,32 +124,48 @@ function CardForms({
   return (
     <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg mb-2">
       <div className="flex flex-row justify-end">
-        <button>settings</button>
-        <button>close</button>
+        <button
+          className="p-2 bg-red-300/10 hover:bg-orange-400 rounded-lg"
+          onClick={() => setSettings(!settings)}
+        >
+          <VAdjustmentsIcon />
+        </button>
+        <button
+          className="p-2 bg-red-300/10 hover:bg-orange-400 rounded-lg ml-2"
+          onClick={handleClose}
+        >
+          <CloseIcon />
+        </button>
       </div>
       <div className="flex flex-col">
-        <div className="font-semi-bold text-red-700 mb-2">Title</div>
-        <input
-          type="text"
-          className="py-1 px-2 text-red-700 mb-5 w-full"
-          value={state.title}
-          onChange={(e) => dispatch({ title: e.target.value })}
-          maxLength={30}
-        />
-        <div className="font-semi-bold text-red-700 mb-2">Writing Tone</div>
-        <select
-          className="select-sm py-1 px-2 text-red-700 mb-5 w-full"
-          value={state.writingTone}
-          onChange={(entry) => {
-            dispatch({
-              writingTone: entry.target.value as CampaignWritingToneType
-            })
-          }}
-        >
-          {campaignWritingTone.map((entry) => (
-            <option key={entry}>{entry}</option>
-          ))}
-        </select>
+        {settings ? (
+          <>
+            <div className="font-semi-bold text-red-700 mb-2">Title</div>
+            <input
+              type="text"
+              className="py-1 px-2 text-red-700 mb-5 w-full"
+              value={state.title}
+              onChange={(e) => dispatch({ title: e.target.value })}
+              maxLength={30}
+            />
+            <div className="font-semi-bold text-red-700 mb-2">Writing Tone</div>
+            <select
+              className="select-sm py-1 px-2 text-red-700 mb-5 w-full"
+              value={state.writingTone}
+              onChange={(entry) => {
+                dispatch({
+                  writingTone: entry.target.value as CampaignWritingToneType
+                })
+              }}
+            >
+              {campaignWritingTone.map((entry) => (
+                <option key={entry}>{entry}</option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <div className="font-bold text-red-700 mb-5">{card.title}</div>
+        )}
       </div>
 
       <div className="flex flex-col justify-between">

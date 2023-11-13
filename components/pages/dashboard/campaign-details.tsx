@@ -21,7 +21,7 @@ export default function CampaignDetails({
   if (!campaign) return <>Campaign Not Found</>
   return (
     <>
-      <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg h-[500px]">
+      <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg h-[500px] mb-5">
         <div className="font-bold text-red-700 mb-5">{campaign.name}</div>
         <div className="font-semi-bold text-red-700 mb-2">Details</div>
         <textarea

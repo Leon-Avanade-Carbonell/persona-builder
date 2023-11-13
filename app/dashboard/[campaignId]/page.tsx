@@ -8,18 +8,18 @@ import { CampaignCards } from '@/components/pages/dashboard/post-cards'
 export default function Page({ params }: { params: { campaignId: string } }) {
   return (
     <>
-      <div className="flex justify-evenly w-[100%]">
-        <div>
-          <CampaignDetails campaignId={params.campaignId} />
-          <MessageList campaignId={params.campaignId} />
-        </div>
-        <div className="max-h-[80%]">
-          <ComposerContextProvider>
+      <ComposerContextProvider>
+        <div className="flex justify-evenly w-[100%]">
+          <div>
+            <CampaignDetails campaignId={params.campaignId} />
             <MessageArea />
+            <MessageList campaignId={params.campaignId} />
+          </div>
+          <div className="max-h-[80%]">
             <CampaignCards campaignId={params.campaignId} />
-          </ComposerContextProvider>
+          </div>
         </div>
-      </div>
+      </ComposerContextProvider>
     </>
   )
 }
