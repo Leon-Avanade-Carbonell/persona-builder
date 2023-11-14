@@ -21,7 +21,7 @@ export function MessageArea() {
         />
         <div className="flex justify-end">
           <button
-            className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
+            className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100 ml-5"
             disabled={!(current.length >= 1)}
             onClick={() => dispatch({ message: current })}
           >

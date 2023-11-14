@@ -14,6 +14,7 @@ import { useComposerContext } from '@/components/context/DashboardComposerContex
 import { useMutation } from '@tanstack/react-query'
 import { CloseIcon } from '@/components/atoms/icons/close'
 import { VAdjustmentsIcon } from '@/components/atoms/icons/adjustments'
+import { RefreshIcon } from '@/components/atoms/icons/refresh'
 
 export function CampaignCards({ campaignId }: { campaignId: string }) {
   const [cardList, setCardList] = useState<CampaignCardType[]>([
@@ -26,6 +27,14 @@ export function CampaignCards({ campaignId }: { campaignId: string }) {
 
   return (
     <>
+      {cardList.map((entry) => (
+        <CardForms
+          key={entry.id}
+          campaignId={campaignId}
+          card={entry}
+          deleteCard={deleteCard}
+        />
+      ))}
       <div className="flex justify-center mb-5">
         <button
           className="p-3 bg-red-700/70 text-red-200 rounded-md mb-5"
@@ -39,14 +48,6 @@ export function CampaignCards({ campaignId }: { campaignId: string }) {
           Add Card
         </button>
       </div>
-      {cardList.map((entry) => (
-        <CardForms
-          key={entry.id}
-          campaignId={campaignId}
-          card={entry}
-          deleteCard={deleteCard}
-        />
-      ))}
     </>
   )
 }
@@ -125,10 +126,16 @@ function CardForms({
     <div className="p-5 w-[600px] border-2 bg-orange-200 rounded-lg mb-2">
       <div className="flex flex-row justify-end">
         <button
-          className="p-2 bg-red-300/10 hover:bg-orange-400 rounded-lg"
+          className="p-2 bg-red-300/10 hover:bg-orange-400 rounded-lg ml-2"
           onClick={() => setSettings(!settings)}
         >
           <VAdjustmentsIcon />
+        </button>
+        <button
+          className="p-2 bg-red-300/10 hover:bg-orange-400 rounded-lg ml-2"
+          onClick={handleGenerate}
+        >
+          <RefreshIcon />
         </button>
         <button
           className="p-2 bg-red-300/10 hover:bg-orange-400 rounded-lg ml-2"
@@ -162,25 +169,41 @@ function CardForms({
                 <option key={entry}>{entry}</option>
               ))}
             </select>
+            <div className="flex justify-end">
+              <button
+                className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
+                disabled={
+                  !(messageState.message.length >= 1) || postAPI.isPending
+                }
+                onClick={handleGenerate}
+              >
+                Generate
+              </button>
+            </div>
           </>
         ) : (
-          <div className="font-bold text-red-700 mb-5">{card.title}</div>
+          <div className="flex flex-row justify-between">
+            <div className="font-bold text-red-700 mb-5">
+              {card.title.length >= 1 ? card.title : 'Content'}
+            </div>
+          </div>
         )}
       </div>
 
       <div className="flex flex-col justify-between">
-        <div className="font-semi-bold text-red-700 mb-2">Output</div>
+        {output.length >= 1 && (
+          <div className="flex flex-col w-full">
+            <div className="divider" />
+          </div>
+        )}
         <div className="text-red-700 mb-2 max-h-[300px] overflow-y-auto">
-          {output}
-        </div>
-        <div className="flex justify-end">
-          <button
-            className="p-3 bg-red-700/70 rounded-md text-red-200 disabled:bg-slate-500/30 disabled:text-slate-100"
-            disabled={!(messageState.message.length >= 1) || postAPI.isPending}
-            onClick={handleGenerate}
-          >
-            Generate
-          </button>
+          {postAPI.isPending ? (
+            <div className="py-3 w-full text-center">
+              <span className="loading loading-spinner loading-md" />
+            </div>
+          ) : (
+            output
+          )}
         </div>
       </div>
     </div>
